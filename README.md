@@ -2,9 +2,11 @@
 
 ## Overview
 
-This project demonstrates the integration of LaunchDarkly's React Web SDK into a sample React.js application. It showcases how to implement feature flags and manage different variations of your application using LaunchDarkly.
+This project demonstrates the integration of LaunchDarkly's React Web SDK into a sample React.js application. It showcases how to implement feature flags and manage different variations of your application using LaunchDarkly's powerful feature management platform.
 
 ![Demo GIF](./src/img/reactjsdemo.gif)
+
+
 
 ## Prerequisites
 
@@ -55,7 +57,7 @@ To serve the built application:
 npx serve build
 ```
 
-## Feature Flags
+## Feature Flag configuration
 
 This demo uses the following feature flags:
 
@@ -69,6 +71,87 @@ This demo uses the following feature flags:
   - Toggle Thumbsup
 
 Each variation contains properties for background image, hero image, hero name, and name.
+
+Example **Light Launcher** variation, see below for full list. 
+```
+{
+  "backgroundImage": "ThumbsUpLight.png",
+  "heroImage": "ThumbsUpLight.png",
+  "heroName": "Light Launcher",
+  "flagKey":"toggle-details",
+  "name": "ThumbsUpLight"
+}
+
+```
+
+**Create targeting rules**
+
+Create targeting rules for *Dark Launcher* and *White Launcher* group members. See the example context for available `context` kind and `attributes`.
+![targetingRles](./src/img/targetRules.png)
+
+
+- **rule**: `Dark Launcher`
+- **configuration**:
+  - context kind: `department`
+  - attribute: `group`
+  - operator: `is one of`
+  - values: `dark-launcher`
+
+
+- **rule**: `Light Launcher`
+- **configuration**:
+  - context kind: `department`
+  - attribute: `group`
+  - operator: `is one of`
+  - values: `light-launcher`
+  - 
+**Example Context**
+```
+{
+      kind: "multi",
+      user: {
+        key: "2919c67e-b076-4154-95c5-f99084df77ec",
+        name: "Wendell Stroman",
+        state: "Kentucky",
+        city: "Hendersontown",
+        country: "Romania",
+      },
+      subscription: {
+        key: "enterprise",
+      },
+      application: {
+        key: "bluelightning",
+        version: "3.7.6",
+      },
+      department: {
+        name: "Baby",
+        key: "baby",
+        group: "dark-launcher",
+      },
+      company: {
+        name: "Kemmer Inc",
+        key: "kemmer-inc",
+      },
+    },
+
+```
+
+
+### 2. Dark Mode
+
+- **Key**: `dark-mode`
+- **Variations**:
+  - Available `(true)`
+  - Unavailable `(false)`
+
+### 3. Debug Mode
+
+- **Key**: `debug`
+- **Variations**:
+  - Available `(true)`
+  - Unavailable `(false)`
+
+## Sample Variations
 
 **Light Launcher**
 ```
@@ -116,21 +199,6 @@ Each variation contains properties for background image, hero image, hero name, 
   "name": "ToggleThumbsUp"
 }
 ```
-
-### 2. Dark Mode
-
-- **Key**: `dark-mode`
-- **Variations**:
-  - Available (true)
-  - Unavailable (false)
-
-### 3. Debug Mode
-
-- **Key**: `debug`
-- **Variations**:
-  - Available (true)
-  - Unavailable (false)
-
 ## Acknowledgments
 
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
